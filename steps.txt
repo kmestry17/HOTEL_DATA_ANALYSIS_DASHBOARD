@@ -1,0 +1,30 @@
+--Hotel Bookings Project
+
+Create a SQL database
+------------------------------------------
+
+username: DESKTOP-B8ME63A
+
+
+--Queries
+
+--collab of various tables
+with hotel_data as(
+select * from dbo.['2018$']
+union
+select * from dbo.['2019$']
+union
+select * from dbo.['2020$'])
+
+--requirement analysis base query
+select 
+hotel,arrival_date_year,sum((stays_in_week_nights+stays_in_weekend_nights)*adr) as revenue 
+from hotel_data
+group by hotel,arrival_date_year
+
+--include market_segment and meal_cost
+select * from hotel_data
+left join dbo.market_segment$
+on hotel_data.market_segment = market_segment$.market_segment
+left join dbo.meal_cost$
+on hotel_data.meal = meal_cost$.meal
